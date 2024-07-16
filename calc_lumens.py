@@ -29,20 +29,21 @@ lux_range = {
     # Residential and Living Spaces:
     (100, 300): 'general living',
     (300, 750): 'kitchen',
-    (500, 800): 'reading',
+    (510, 810): 'reading',
+    (490, 790): 'bathrooms',
 
     # Office Spaces:
     (300, 500): 'general office',
     (500, 1000): 'detailed office',
 
     # Educational and Learning Environments:
-    (300, 500): 'classroom',
+    (310, 510): 'classroom',
     (500, 800): 'library',
 
     # Industrial and Commercial Settings:
     (200, 300): 'warehouse',
-    (500, 1000): 'detailed mechanical',
-    (750, 1500): 'retail',
+    (500, 1000): 'workshops - detailed mechanical',
+    (750, 1500): 'retail space',
 
     # Outdoor Areas:
     (1000, 2000): 'overcast day',
@@ -50,13 +51,13 @@ lux_range = {
 }
 
 space_type = input('Type of lux category space - \n\
-general living, kitchen, reading, general office, detailed office, classroom,\n\
-warehouse, library, detailed mechanical, retail, overcast day, full daylight : \n')
+general living, kitchen, reading, bathrooms, general office, detailed office, classroom,\n\
+warehouse, library, workshops - detailed mechanical, retail, overcast day, full daylight : \n')
 area_m2 = float(input('Type area value : '))
 
-lumens, condition = calculate_lumens(space_type, area_m2, lux_range)
+lumens, space_room = calculate_lumens(space_type, area_m2, lux_range)
 
 if lumens:
-    print(f'For the space type : {condition}:\nMinimum lumens - {int(lumens[0])}\nMaximum lumens : {int(lumens[1])}')
+    print(f'For the space type "{space_room}" :\nMinimum lumens - {int(lumens[0])}\nMaximum lumens - {int(lumens[1])}')
 else:
-    print(f'Type error ! Lux value is not in the list of "{condition}"')
+    print(f'Type error ! Lux value is not in the list of "{space_room}"')
