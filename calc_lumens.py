@@ -52,7 +52,7 @@ lux_range = {
 
 space_type = input('Type of lux category space - \n\
 general living, kitchen, reading, bathrooms, general office, detailed office, classroom,\n\
-warehouse, library, workshops - detailed mechanical, retail, overcast day, full daylight : \n')
+warehouse, library, workshops - detailed mechanical, retail space, overcast day, full daylight : \n')
 area_m2 = float(input('Type area value : '))
 
 lumens, space_room = calculate_lumens(space_type, area_m2, lux_range)
