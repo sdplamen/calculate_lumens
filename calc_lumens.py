@@ -19,7 +19,7 @@ def calculate_lumens(space_type, area, lux_range):
 
 
 def lookup_lux(space_type, lux_range):
-    for (min_lux, max_lux), space_room in lux_range.items():
+    for space_room, (min_lux, max_lux) in lux_range.items():
         if space_room == space_type:
             return (min_lux, max_lux)
     return None
@@ -27,27 +27,27 @@ def lookup_lux(space_type, lux_range):
 
 lux_range = {
     # Residential and Living Spaces:
-    (100, 300): 'general living',
-    (300, 750): 'kitchen',
-    (510, 810): 'reading',
-    (490, 790): 'bathrooms',
+    'general living': (100, 300),
+    'kitchen': (300, 750),
+    'reading': (500, 800),
+    'bathrooms': (500, 800),
 
     # Office Spaces:
-    (300, 500): 'general office',
-    (500, 1000): 'detailed office',
+    'general office': (300, 500),
+    'detailed office': (500, 1000),
 
     # Educational and Learning Environments:
-    (310, 510): 'classroom',
-    (500, 800): 'library',
+    'classroom': (300, 500),
+    'library': (500, 800),
 
     # Industrial and Commercial Settings:
-    (200, 300): 'warehouse',
-    (500, 1000): 'workshops - detailed mechanical',
-    (750, 1500): 'retail space',
+    'warehouse': (200, 300),
+    'workshops - detailed mechanical': (500, 1000),
+    'retail space': (750, 1500),
 
     # Outdoor Areas:
-    (1000, 2000): 'overcast day',
-    (10000, 25000): 'full daylight'
+    'overcast day': (1000, 2000),
+    'full daylight': (10000, 25000)
 }
 
 space_type = input('Type of lux category space - \n\
