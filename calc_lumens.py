@@ -45,20 +45,19 @@ lux_range = {
     (750, 1500): 'retail',
 
     # Outdoor Areas:
-    (1000, 2000): 'overcast_day',
+    (1000, 2000): 'overcast day',
     (10000, 25000): 'full daylight'
 }
 
-space_type = input('Type of lux category space - \
-general living, kitchen, reading, general office, detailed office,\
-classroom, warehouse, library, detailed_mechanical, retail, \
-overcast_day, full_daylight : ')
+space_type = input('Type of lux category space - \n\
+general living, kitchen, reading, general office, detailed office, classroom,\n\
+warehouse, library, detailed mechanical, retail, overcast day, full daylight : \n')
 area_m2 = float(input('Type area value : '))
 
 lumens, condition = calculate_lumens(space_type, area_m2, lux_range)
 
 if lumens:
-    print(f'For the space type {condition}:\nMinimum lumens: {lumens[0]} Maximum lumens: {lumens[1]}')
+    print(f'For the space type : {condition}:\nMinimum lumens - {int(lumens[0])}\nMaximum lumens : {int(lumens[1])}')
 else:
     print(f'Type error ! Lux value is not in the list of "{condition}"')
 
