@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Comforter+Brush&family=Great+Vibes&family=Marck+Script&display=swap');
+body {
+    background-color: #264b5d;
+    font-family: Montserrat, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #ffffcc;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffcc;
+}
+select, input {
+    background-color: #264b5d;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    color: #ffffcc;
+}
+button {
+    padding: 10px 20px;
+    background-color: #0095af;
+    color: #ffffcc;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.result {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.error {
+    color: red;
+}

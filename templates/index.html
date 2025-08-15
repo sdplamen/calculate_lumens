@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumen Calculator</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+</head>
+<body>
+    <h1>Lumen Calculator</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.space_type.id_for_label }}">{{ form.space_type.label }}</label>
+            {{ form.space_type }}
+            {% if form.space_type.errors %}
+                <p class="error">{{ form.space_type.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.area.id_for_label }}">{{ form.area.label }}</label>
+            {{ form.area }}
+            {% if form.area.errors %}
+                <p class="error">{{ form.area.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if success %}
+        <div class="result">
+            <p>For the space type <strong>{{ space_type }}</strong>:</p>
+            <p>Minimum lumens - {{ min_lumens }}</p>
+            <p>Maximum lumens - {{ max_lumens }}</p>
+        </div>
+    {% elif error %}
+        <div class="result error">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+</body>
