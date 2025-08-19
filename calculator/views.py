@@ -17,13 +17,13 @@ def calculate_lumens(space_type, area):
     avg_lumens = (min_lumens + max_lumens) / 2
 
     return {
-        'space_type' :space_type,
-        'area' :area,
-        'min_lux' :min_lux,
-        'max_lux' :max_lux,
-        'min_lumens' :int(min_lumens),
-        'max_lumens' :int(max_lumens),
-        'avg_lumens' :int(avg_lumens),
+        'space_type': space_type,
+        'area': area,
+        'min_lux': min_lux,
+        'max_lux': max_lux,
+        'min_lumens': int(min_lumens),
+        'max_lumens': int(max_lumens),
+        'avg_lumens': int(avg_lumens),
     }
 
 def lumens_calculator(request):
@@ -54,10 +54,10 @@ class LumenCalculatorAPIView(APIView):
 
         results = calculate_lumens(space_type, area)
 
-        if results :
+        if results:
             return Response(results, status=status.HTTP_200_OK)
-        else :
+        else:
             return Response(
-                {"error" :f"Space type '{space_type}' not found or invalid."},
+                {"error": f"Space type '{space_type}' not found or invalid."},
                 status=status.HTTP_400_BAD_REQUEST
             )
