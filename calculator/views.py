@@ -1,70 +1,63 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import render
-from .forms import LumenForm
+from calculator.forms import LUX_RANGE, LumenForm
+from serializers import LumenCalculatorSerializer
 
 
-def lookup_lux(space_type, lux_range) :
-    for space_room, (min_lux, max_lux) in lux_range.items() :
-        if space_room == space_type :
-            return (min_lux, max_lux)
-    return None
+def calculate_lumens(space_type, area):
+    min_lux, max_lux = LUX_RANGE.get(space_type, (0, 0))
 
-
-def calculate_lumens(space_type, area, lux_range) :
-    lux_values = lookup_lux(space_type, lux_range)
-    if lux_values is None :
+    if min_lux == 0 and max_lux == 0 and space_type not in LUX_RANGE :
         return None
 
-    min_lux, max_lux = lux_values
     min_lumens = min_lux * area
     max_lumens = max_lux * area
+    avg_lumens = (min_lumens + max_lumens) / 2
 
-    return (min_lumens, max_lumens), space_type
+    return {
+        'space_type' :space_type,
+        'area' :area,
+        'min_lux' :min_lux,
+        'max_lux' :max_lux,
+        'min_lumens' :int(min_lumens),
+        'max_lumens' :int(max_lumens),
+        'avg_lumens' :int(avg_lumens),
+    }
 
+def lumens_calculator(request):
+    results = None
+    form = LumenForm(request.POST or None)
 
-lux_range = {
-    'general living' :(100, 300),
-    'kitchen' :(300, 750),
-    'reading' :(500, 800),
-    'bathrooms' :(500, 800),
-    'general office' :(300, 500),
-    'detailed office' :(500, 1000),
-    'classroom' :(300, 500),
-    'library' :(500, 800),
-    'warehouse' :(200, 300),
-    'workshops - detailed mechanical' :(500, 1000),
-    'retail space' :(750, 1500),
-    'overcast day' :(1000, 2000),
-    'full daylight' :(10000, 25000)
-}
+    if request.method == 'POST' and form.is_valid() :
+        space_type = form.cleaned_data['space_type']
+        area = form.cleaned_data['area']
+        results = calculate_lumens(space_type, area)
 
-
-def calculate_view(request) :
-    if request.method == 'POST' :
-        form = LumenForm(request.POST)
-        if form.is_valid() :
-            space_type = form.cleaned_data['space_type']
-            area = form.cleaned_data['area']
-
-            result = calculate_lumens(space_type, area, lux_range)
-
-            if result :
-                lumens, space_room = result
-                context = {
-                    'form' :form,
-                    'success' :True,
-                    'space_type' :space_room,
-                    'min_lumens' :int(lumens[0]),
-                    'max_lumens' :int(lumens[1])
-                }
-            else :
-                context = {
-                    'form' :form,
-                    'success' :False,
-                    'error' :f'Type error! Lux value is not in the list of "{space_type}"'
-                }
-        else :
-            context = {'form' :form}
-    else :
-        context = {'form' :LumenForm()}
-
+    context = {
+        'form': form,
+        'results': results,
+    }
     return render(request, 'index.html', context)
+
+class LumenCalculatorAPIView(APIView):
+    serializer_class = LumenCalculatorSerializer
+    def post(self, request, *args, **kwargs) :
+        serializer = LumenCalculatorSerializer(data=request.data)
+
+        if not serializer.is_valid() :
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        space_type = serializer.validated_data['space_type']
+        area = serializer.validated_data['area']
+
+        results = calculate_lumens(space_type, area)
+
+        if results :
+            return Response(results, status=status.HTTP_200_OK)
+        else :
+            return Response(
+                {"error" :f"Space type '{space_type}' not found or invalid."},
+                status=status.HTTP_400_BAD_REQUEST
+            )

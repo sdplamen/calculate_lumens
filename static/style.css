@@ -2,7 +2,7 @@
 body {
     background-color: #264b5d;
     font-family: Montserrat, sans-serif;
-    max-width: 800px;
+    max-width: 400px;
     margin: 0 auto;
     padding: 20px;
     color: #ffffcc;
@@ -28,15 +28,24 @@ button {
     color: #ffffcc;
     border: none;
     cursor: pointer;
+    border-radius: 15px;
 }
 button:hover {
     background-color: #0056b3;
+    border-radius: 15px;
 }
 .result {
     margin-top: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+.results-title {
+    font-size: 20px;
+}
+.results-list li {
+    text-decoration: none;
+    font-size: 12px;
 }
 .error {
     color: red;

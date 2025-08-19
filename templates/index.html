@@ -6,38 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumen Calculator</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
 <!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 </head>
 <body>
-    <h1>Lumen Calculator</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.space_type.id_for_label }}">{{ form.space_type.label }}</label>
-            {{ form.space_type }}
-            {% if form.space_type.errors %}
-                <p class="error">{{ form.space_type.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="{{ form.area.id_for_label }}">{{ form.area.label }}</label>
-            {{ form.area }}
-            {% if form.area.errors %}
-                <p class="error">{{ form.area.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <button type="submit">Calculate</button>
-    </form>
+    <div class="form-group">
+        <h1 class="title">Lumens per square meter Calculator</h1>
 
-    {% if success %}
-        <div class="result">
-            <p>For the space type <strong>{{ space_type }}</strong>:</p>
-            <p>Minimum lumens - {{ min_lumens }}</p>
-            <p>Maximum lumens - {{ max_lumens }}</p>
-        </div>
-    {% elif error %}
-        <div class="result error">
-            <p>{{ error }}</p>
-        </div>
-    {% endif %}
+        <form method="POST" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="button">Calculate</button>
+        </form>
+
+        {% if results %}
+            <div class="results" role="region" aria-label="Calculation results">
+                <h3 class="results-title">Results for {{ results.space_type }} (Area: {{ results.area }} m²)</h3>
+                <ul class="results-list">
+                    <li>Lux Range: {{ results.min_lux }} - {{ results.max_lux }} lux</li>
+                    <li>Minimum Lumens: {{ results.min_lumens }}</li>
+                    <li>Maximum Lumens: {{ results.max_lumens }}</li>
+                    <li>Recommended Average Lumens: {{ results.avg_lumens }}</li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+<!--    <h1>Lumen Calculator</h1>-->
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <div class="form-group">-->
+<!--            <label for="{{ form.space_type.id_for_label }}">{{ form.space_type.label }}</label>-->
+<!--            {{ form.space_type }}-->
+<!--            {% if form.space_type.errors %}-->
+<!--                <p class="error">{{ form.space_type.errors.as_text }}</p>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="{{ form.area.id_for_label }}">{{ form.area.label }}</label>-->
+<!--            {{ form.area }}-->
+<!--            {% if form.area.errors %}-->
+<!--                <p class="error">{{ form.area.errors.as_text }}</p>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--        <button type="submit">Calculate</button>-->
+<!--    </form>-->
+
+<!--    {% if success %}-->
+<!--        <div class="result">-->
+<!--            <p>For the space type <strong>{{ space_type }}</strong>:</p>-->
+<!--            <p>Minimum lumens - {{ min_lumens }}</p>-->
+<!--            <p>Maximum lumens - {{ max_lumens }}</p>-->
+<!--        </div>-->
+<!--    {% elif error %}-->
+<!--        <div class="result error">-->
+<!--            <p>{{ error }}</p>-->
+<!--        </div>-->
+<!--    {% endif %}-->
 </body>
+</html>
