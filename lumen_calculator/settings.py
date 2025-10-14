@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i$*pk%j9*u+h!q0_bh8gc0#km-4(2hk57w++__w^188nj62kj5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'calculate-lumens.onrender.com']
 
 
 # Application definition
