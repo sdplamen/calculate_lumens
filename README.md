@@ -95,3 +95,6 @@ python calc_lumens.py
 ```
 
 The script will prompt you to enter the space type and area.
+
+**Live Demo:** [https://calculate-lumens.onrender.com](https://calculate-lumens.onrender.com)
+Note: Hosted on Render's free tier. If the link takes ~30 seconds to load initially, it is waking up the server instance.
